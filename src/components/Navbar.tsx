@@ -1,4 +1,4 @@
-import imagecv from "../assets/imagecv.png";
+
 export default function Navbar() {
   
   return (
