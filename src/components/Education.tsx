@@ -1,4 +1,6 @@
+// src/components/Education.tsx
 import React from "react";
+import type { Lang } from "../lang";
 
 type EduItemProps = {
   icon: React.ReactNode;
@@ -37,37 +39,77 @@ const EduItem: React.FC<EduItemProps> = ({
   );
 };
 
-const Education: React.FC = () => {
+type EducationProps = {
+  lang: Lang;
+};
+
+const Education: React.FC<EducationProps> = ({ lang }) => {
+  const title = lang === "fr" ? "Formation Académique" : "Academic Background";
+
+  const items: EduItemProps[] =
+    lang === "fr"
+      ? [
+          {
+            icon: <i className="bi bi-mortarboard"></i>,
+            title: "Cycle Ingénieur en Informatique",
+            school: "ESPRIM",
+            place: "Al Munastir, Tunisie",
+            period: "Depuis Septembre 2023",
+            desc: "Spécialisation en développement web et mobile.",
+          },
+          {
+            icon: <i className="bi bi-book-half"></i>,
+            title: "Licence en Technologies de l'Informatique",
+            school: "ISET Medenine",
+            place: "Medenine, Tunisie",
+            period: "Septembre 2019 - Juin 2022",
+            desc: "Développement des Systèmes d'Information.",
+          },
+          {
+            icon: <i className="bi bi-award"></i>,
+            title: "Baccalauréat en Informatique",
+            school: "Abou El Kacem El Chebbi",
+            place: "Kssour Essef, Mahdia",
+            period: "2018",
+            desc: "Série sciences informatiques.",
+          },
+        ]
+      : [
+          {
+            icon: <i className="bi bi-mortarboard"></i>,
+            title: "Computer Engineering Cycle",
+            school: "ESPRIM",
+            place: "Al Munastir, Tunisia",
+            period: "Since September 2023",
+            desc: "Specialization in web and mobile development.",
+          },
+          {
+            icon: <i className="bi bi-book-half"></i>,
+            title: "Bachelor in IT Technologies",
+            school: "ISET Medenine",
+            place: "Medenine, Tunisia",
+            period: "September 2019 - June 2022",
+            desc: "Information Systems Development.",
+          },
+          {
+            icon: <i className="bi bi-award"></i>,
+            title: "High School Diploma in Computer Science",
+            school: "Abou El Kacem El Chebbi",
+            place: "Kssour Essef, Mahdia",
+            period: "2018",
+            desc: "Computer science track.",
+          },
+        ];
+
   return (
     <section id="education" className="py-5">
       <div className="container">
-        <h2 className="section-title text-center">Formation Académique</h2>
+        <h2 className="section-title text-center">{title}</h2>
 
         <div className="vstack gap-4 mt-1">
-          <EduItem
-            icon={<i className="bi bi-mortarboard"></i>}
-            title="Cycle Ingénieur en Informatique"
-            school="ESPRIM"
-            place="Al Munastir, Tunisie"
-            period="Depuis Septembre 2023"
-            desc="Spécialisation en développement web et mobile."
-          />
-          <EduItem
-            icon={<i className="bi bi-book-half"></i>}
-            title="Licence en Technologies de l'Informatique"
-            school="ISET Medenine"
-            place="Medenine, Tunisie"
-            period="Septembre 2019 - Juin 2022"
-            desc="Développement des Systèmes d'Information."
-          />
-          <EduItem
-            icon={<i className="bi bi-award"></i>}
-            title="Baccalauréat en Informatique"
-            school="Abou El Kacem El Chebbi"
-            place="Kssour Essef, Mahdia"
-            period="2018"
-            desc="Séries sciences informatiques."
-          />
+          {items.map((e, i) => (
+            <EduItem key={i} {...e} />
+          ))}
         </div>
       </div>
     </section>

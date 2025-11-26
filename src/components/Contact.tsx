@@ -1,9 +1,54 @@
+// src/components/Contact.tsx
 import React, { useRef, useState } from "react";
+import type { Lang } from "../lang";
 import emailjs from "emailjs-com";
 
-const Contact: React.FC = () => {
+type ContactProps = {
+  lang: Lang;
+};
+
+const Contact: React.FC<ContactProps> = ({ lang }) => {
   const formRef = useRef<HTMLFormElement | null>(null);
   const [sending, setSending] = useState(false);
+
+  const t =
+    lang === "fr"
+      ? {
+          title: "Contactez-Moi",
+          heroText:
+            "N’hésitez pas à me contacter pour discuter d’opportunités de stage, de projets ou simplement pour échanger.",
+          labelName: "Nom complet",
+          labelEmail: "Email",
+          labelMessage: "Message",
+          placeholderName: "Votre nom",
+          placeholderEmail: "votre.email@exemple.com",
+          placeholderMessage: "Votre message...",
+          sending: "Envoi en cours...",
+          send: "Envoyer le message",
+          alertOk: "✅ Message envoyé avec succès !",
+          alertErr: "❌ Erreur lors de l’envoi, veuillez réessayer.",
+          infoEmail: "Email",
+          infoPhone: "Téléphone",
+          infoLocation: "Localisation",
+        }
+      : {
+          title: "Contact Me",
+          heroText:
+            "Feel free to contact me to discuss internship opportunities, projects or just to connect.",
+          labelName: "Full name",
+          labelEmail: "Email",
+          labelMessage: "Message",
+          placeholderName: "Your name",
+          placeholderEmail: "your.email@example.com",
+          placeholderMessage: "Your message...",
+          sending: "Sending...",
+          send: "Send message",
+          alertOk: "✅ Message sent successfully!",
+          alertErr: "❌ Error while sending, please try again.",
+          infoEmail: "Email",
+          infoPhone: "Phone",
+          infoLocation: "Location",
+        };
 
   const sendEmail = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -13,21 +58,21 @@ const Contact: React.FC = () => {
 
     emailjs
       .sendForm(
-        "service_jdyokh9",   // 👉 remplace par TON service ID EmailJS
-        "template_8gyqyas",  // 👉 remplace par TON template ID
+        "service_jdyokh9", // ⚠️ tes IDs perso
+        "template_8gyqyas",
         formRef.current,
-        "EGyrVFgTMxDWTiLLV"     // 👉 remplace par TA public key
+        "EGyrVFgTMxDWTiLLV"
       )
       .then(
         () => {
           setSending(false);
-          alert("✅ Message envoyé avec succès !");
+          alert(t.alertOk);
           formRef.current?.reset();
         },
         (error) => {
           console.error(error);
           setSending(false);
-          alert("❌ Erreur lors de l’envoi, veuillez réessayer.");
+          alert(t.alertErr);
         }
       );
   };
@@ -37,11 +82,10 @@ const Contact: React.FC = () => {
       {/* HERO */}
       <div className="contact-hero py-5 py-md-6">
         <div className="container text-center">
-          <h2 className="display-4 fw-bolder mb-2 text-white">Contactez-Moi</h2>
+          <h2 className="display-4 fw-bolder mb-2 text-white">{t.title}</h2>
           <div className="contact-underline mx-auto mb-3" />
           <p className="text-white-50 lead mx-auto" style={{ maxWidth: 820 }}>
-            N’hésitez pas à me contacter pour discuter d’opportunités de stage, de projets
-            ou simplement pour échanger.
+            {t.heroText}
           </p>
         </div>
       </div>
@@ -58,7 +102,7 @@ const Contact: React.FC = () => {
                     <i className="bi bi-envelope" />
                   </div>
                   <div>
-                    <div className="text-white-50 small">Email</div>
+                    <div className="text-white-50 small">{t.infoEmail}</div>
                     <a
                       className="text-white text-decoration-none"
                       href="mailto:Chaima.Sghaier@esprim.tn"
@@ -73,7 +117,7 @@ const Contact: React.FC = () => {
                     <i className="bi bi-telephone" />
                   </div>
                   <div>
-                    <div className="text-white-50 small">Téléphone</div>
+                    <div className="text-white-50 small">{t.infoPhone}</div>
                     <span className="text-white">+216 93 582 719</span>
                   </div>
                 </div>
@@ -83,7 +127,9 @@ const Contact: React.FC = () => {
                     <i className="bi bi-geo-alt" />
                   </div>
                   <div>
-                    <div className="text-white-50 small">Localisation</div>
+                    <div className="text-white-50 small">
+                      {t.infoLocation}
+                    </div>
                     <span className="text-white">Mahdia, Tunisie</span>
                   </div>
                 </div>
@@ -91,7 +137,7 @@ const Contact: React.FC = () => {
                 <div className="d-flex gap-3 mt-2">
                   <a
                     className="btn btn-light rounded-pill px-4"
-                    href="#"
+                    href="https://www.linkedin.com/in/chaima-sghaier-4a8bab305/"
                     target="_blank"
                     rel="noreferrer"
                   >
@@ -100,7 +146,7 @@ const Contact: React.FC = () => {
                   </a>
                   <a
                     className="btn btn-outline-light rounded-pill px-4"
-                    href="#"
+                    href="https://github.com/sghaierchaima"
                     target="_blank"
                     rel="noreferrer"
                   >
@@ -119,33 +165,39 @@ const Contact: React.FC = () => {
                 className="card-soft bg-translucent p-4 p-md-5"
               >
                 <div className="mb-3">
-                  <label className="form-label text-white-50">Nom complet</label>
+                  <label className="form-label text-white-50">
+                    {t.labelName}
+                  </label>
                   <input
-                    name="name" // 🔁 doit correspondre à {{name}} dans EmailJS
+                    name="name"
                     className="form-control form-control-lg bg-dark-subtle text-white"
-                    placeholder="Votre nom"
+                    placeholder={t.placeholderName}
                     required
                   />
                 </div>
 
                 <div className="mb-3">
-                  <label className="form-label text-white-50">Email</label>
+                  <label className="form-label text-white-50">
+                    {t.labelEmail}
+                  </label>
                   <input
-                    name="email" // 🔁 doit correspondre à {{email}} dans EmailJS
+                    name="email"
                     type="email"
                     className="form-control form-control-lg bg-dark-subtle text-white"
-                    placeholder="votre.email@exemple.com"
+                    placeholder={t.placeholderEmail}
                     required
                   />
                 </div>
 
                 <div className="mb-4">
-                  <label className="form-label text-white-50">Message</label>
+                  <label className="form-label text-white-50">
+                    {t.labelMessage}
+                  </label>
                   <textarea
-                    name="message" // 🔁 doit correspondre à {{message}} dans EmailJS
+                    name="message"
                     rows={5}
                     className="form-control bg-dark-subtle text-white"
-                    placeholder="Votre message..."
+                    placeholder={t.placeholderMessage}
                     required
                   />
                 </div>
@@ -161,12 +213,12 @@ const Contact: React.FC = () => {
                         className="spinner-border spinner-border-sm me-2"
                         role="status"
                       />
-                      Envoi en cours...
+                      {t.sending}
                     </>
                   ) : (
                     <>
                       <i className="bi bi-send me-2" />
-                      Envoyer le message
+                      {t.send}
                     </>
                   )}
                 </button>

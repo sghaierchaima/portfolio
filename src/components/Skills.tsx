@@ -1,4 +1,8 @@
+// src/components/Skills.tsx
 import React from "react";
+import type { Lang } from "../lang";
+
+type SkillsProps = { lang: Lang };
 
 type PillProps = {
   children: React.ReactNode;
@@ -8,22 +12,39 @@ const Pill: React.FC<PillProps> = ({ children }) => (
   <span className="pill">{children}</span>
 );
 
-const Skills: React.FC = () => {
+const titles = {
+  fr: {
+    main: "Compétences & Technologies",
+    lang: "Langages de Programmation",
+    fw: "Frameworks & Bibliothèques",
+    db: "Bases de Données",
+    tools: "Outils & Technologies",
+  },
+  en: {
+    main: "Skills & Technologies",
+    lang: "Programming Languages",
+    fw: "Frameworks & Libraries",
+    db: "Databases",
+    tools: "Tools & Technologies",
+  },
+};
+
+const Skills: React.FC<SkillsProps> = ({ lang }) => {
+  const t = titles[lang];
+
   return (
     <section id="skills" className="py-5 section-bg">
       <div className="container">
-        <h2 className="section-title text-center">
-          Compétences & Certifications
-        </h2>
+        <h2 className="section-title text-center">{t.main}</h2>
 
         <div className="row g-4 mt-1">
-          {/* Langages de Programmation */}
+          {/* Langages */}
           <div className="col-lg-6">
             <div className="card-soft h-100 p-4 p-md-5">
               <div className="icon-bubble gradient-blue mb-2">
                 <i className="bi bi-code-slash" />
               </div>
-              <h5 className="mb-3">Langages de Programmation</h5>
+              <h5 className="mb-3">{t.lang}</h5>
               <div className="d-flex flex-wrap gap-2">
                 <Pill>JavaScript</Pill>
                 <Pill>TypeScript</Pill>
@@ -36,13 +57,13 @@ const Skills: React.FC = () => {
             </div>
           </div>
 
-          {/* Frameworks & Bibliothèques */}
+          {/* Frameworks */}
           <div className="col-lg-6">
             <div className="card-soft h-100 p-4 p-md-5">
               <div className="icon-bubble gradient-indigo mb-2">
                 <i className="bi bi-layers" />
               </div>
-              <h5 className="mb-3">Frameworks & Bibliothèques</h5>
+              <h5 className="mb-3">{t.fw}</h5>
               <div className="d-flex flex-wrap gap-2">
                 <Pill>React</Pill>
                 <Pill>Angular</Pill>
@@ -56,13 +77,13 @@ const Skills: React.FC = () => {
             </div>
           </div>
 
-          {/* Bases de Données */}
+          {/* Bases de données */}
           <div className="col-lg-6">
             <div className="card-soft h-100 p-4 p-md-5">
               <div className="icon-bubble gradient-purple mb-2">
                 <i className="bi bi-hdd-network" />
               </div>
-              <h5 className="mb-3">Bases de Données</h5>
+              <h5 className="mb-3">{t.db}</h5>
               <div className="d-flex flex-wrap gap-2">
                 <Pill>MySQL</Pill>
                 <Pill>MongoDB</Pill>
@@ -73,13 +94,13 @@ const Skills: React.FC = () => {
             </div>
           </div>
 
-          {/* Outils & Technologies */}
+          {/* Outils */}
           <div className="col-lg-6">
             <div className="card-soft h-100 p-4 p-md-5">
               <div className="icon-bubble gradient-green mb-2">
                 <i className="bi bi-phone" />
               </div>
-              <h5 className="mb-3">Outils & Technologies</h5>
+              <h5 className="mb-3">{t.tools}</h5>
               <div className="d-flex flex-wrap gap-2">
                 <Pill>Git</Pill>
                 <Pill>REST API</Pill>
@@ -93,8 +114,6 @@ const Skills: React.FC = () => {
           </div>
         </div>
 
-        {/* Certifications */}
-        
       </div>
     </section>
   );

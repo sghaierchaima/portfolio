@@ -69,29 +69,29 @@ body{ background:#fff; color:#0f172a; }
 }
 .cert-item i{ color:var(--teal); margin-right:.6rem; }
 
-/* timeline layout */
-.timeline{ position:relative; }
-.timeline::before{
-  content:""; position:absolute; left:50%; top:0; bottom:0; width:2px; background:#dff4f1;
-}
-.exp-card{ position:relative; width:100%; margin:1.25rem 0; }
-.exp-card.left{ padding-right:52%; }
-.exp-card.right{ padding-left:52%; }
-.exp-card.left .card-soft{ margin-right:2rem; }
-.exp-card.right .card-soft{ margin-left:2rem; }
-.exp-card::after{
-  content:""; position:absolute; top:32px; left:calc(50% - 7px); width:14px; height:14px; border-radius:50%;
-  background:#fff; border:3px solid var(--teal);
+/* petit point sur la ligne */
+.exp-card::after {
+  content: "";
+  position: absolute;
+  top: 30px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #fff;
+  border: 3px solid var(--teal);
+  z-index: 2;
 }
 
-/* responsive */
-@media (max-width:992px){
-  .timeline::before{ left:10px; }
-  .exp-card{ padding:0 0 0 30px; }
-  .exp-card.left .card-soft,
-  .exp-card.right .card-soft{ margin:0; }
-  .exp-card::after{ left:2px; }
+/* left : le cercle sort à droite de la card pour toucher la ligne */
+.exp-card.left::after {
+  right: -7px;   /* moitié du cercle en dehors de la card */
 }
+
+/* right : le cercle sort à gauche de la card pour toucher la ligne */
+.exp-card.right::after {
+  left: -7px;
+}
+
 /* --- PROJECTS --- */
 .project-card .project-head{
   height:160px;
@@ -424,3 +424,201 @@ body{ background:#fff; color:#0f172a; }
 
 
 
+/* --- TIMELINE (DESKTOP) --- */
+.timeline {
+  position: relative;
+  margin-top: 2rem;
+}
+
+/* ligne au centre */
+.timeline::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  background: #dff4f1;
+}
+
+/* chaque bloc d'expérience */
+.exp-card {
+  position: relative;
+  margin: 1.5rem 0;
+}
+
+/* 2 colonnes sur grand écran */
+.exp-card.left,
+.exp-card.right {
+  width: 50%;
+}
+
+.exp-card.left {
+  padding-right: 2.5rem;
+  margin-left: 0;
+  margin-right: auto;
+}
+
+.exp-card.right {
+  padding-left: 2.5rem;
+  margin-left: auto;
+  margin-right: 0;
+}
+
+/* la card elle-même */
+.exp-card .card-soft {
+  height: 100%;
+}
+
+/* petit point sur la ligne */
+
+
+/* --- TIMELINE RESPONSIVE (MOBILE / TABLETTE) --- */
+@media (max-width: 991.98px) {
+  /* on cache la ligne centrale (ou tu peux la décaler à gauche si tu veux) */
+  .timeline::before {
+    display: none;
+  }
+
+  /* les cartes prennent toute la largeur */
+  .exp-card,
+  .exp-card.left,
+  .exp-card.right {
+    width: 100%;
+    margin: 0 0 1.5rem 0;
+    padding: 0;
+  }
+
+  .exp-card .card-soft {
+    margin: 0;
+  }
+
+  /* on enlève le point central sur mobile (optionnel) */
+  .exp-card::after {
+    display: none;
+  }
+}
+
+
+
+
+
+
+/**/
+/* === GALERIE STYLE INSTAGRAM === */
+.insta-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* desktop : 3 colonnes */
+  gap: 6px;
+}
+
+.insta-img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s;
+  display: block;
+}
+
+.insta-img:hover {
+  opacity: 0.85;
+}
+
+/* === MODAL PLEIN ÉCRAN === */
+.insta-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.88);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+/* image centrale dans le modal */
+.insta-modal img {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 10px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.6);
+}
+
+/* boutons navigation / fermeture */
+.nav-btn {
+  position: absolute;
+  top: 50%;
+  font-size: 40px;
+  color: #fff;
+  cursor: pointer;
+  user-select: none;
+  transform: translateY(-50%);
+  opacity: 0.7;
+}
+
+.nav-btn:hover {
+  opacity: 1;
+}
+
+.nav-left { left: 5%; }
+.nav-right { right: 5%; }
+
+.close-btn {
+  position: absolute;
+  top: 5%;
+  right: 5%;
+  font-size: 38px;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* ====== RESPONSIVE ====== */
+
+/* Tablette (≤ 992px) : 2 colonnes */
+@media (max-width: 992px) {
+  .insta-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .insta-img {
+    height: 110px;
+  }
+
+  .nav-btn {
+    font-size: 34px;
+  }
+
+  .close-btn {
+    font-size: 32px;
+  }
+}
+
+/* Mobile (≤ 576px) : 1 seule colonne + boutons plus proches */
+@media (max-width: 576px) {
+  .insta-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .insta-img {
+    height: 210px;
+  }
+
+  .insta-modal img {
+    max-width: 95%;
+    max-height: 80%;
+  }
+
+  .nav-left { left: 3%; }
+  .nav-right { right: 3%; }
+
+  .nav-btn {
+    font-size: 28px;
+  }
+
+  .close-btn {
+    top: 3%;
+    right: 3%;
+    font-size: 28px;
+  }
+}

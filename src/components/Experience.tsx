@@ -1,4 +1,6 @@
+// src/components/Experience.tsx
 import React from "react";
+import type { Lang } from "../lang";
 
 type ExpCardProps = {
   side?: "left" | "right";
@@ -58,42 +60,110 @@ const ExpCard: React.FC<ExpCardProps> = ({
   );
 };
 
-const Experience: React.FC = () => {
-  return (
-    <section id="exp" className="py-5">
-      <div className="container">
-        <h2 className="section-title text-center">Expérience Professionnelle</h2>
+type ExperienceProps = {
+  lang: Lang;
+};
 
-        <div className="timeline mt-4">
-          <ExpCard
-            side="left"
-            title="Stage – Développement Application Mobile"
-            org="ESPRIM"
-            date="Juillet 2025 – Août 2025"
-            place="Al Munastir, Tunisie"
-            bullets={[
+const Experience: React.FC<ExperienceProps> = ({ lang }) => {
+  const title =
+    lang === "fr" ? "Expérience Professionnelle" : "Professional Experience";
+
+  const cards: ExpCardProps[] =
+    lang === "fr"
+      ? [
+          {
+            side: "left",
+            title: "Stage – Développement Application Mobile",
+            org: "ESPRIM",
+            date: "Juillet 2025 – Août 2025",
+            place: "Al Munastir, Tunisie",
+            bullets: [
               "Développement d’une application mobile avec Flutter",
               "Backend Spring Boot & MongoDB",
               "Authentification sécurisée JWT",
               "Modules : annonces, emplois du temps, portail étudiant",
-            ]}
-            tags={["Flutter", "Spring Boot", "MongoDB", "JWT"]}
-          />
-
-          <ExpCard
-            side="right"
-            title="Projet de Fin d’Année – Plateforme E-commerce"
-            org="SOTUDEV"
-            date="Février 2022 – Mai 2022"
-            place="Medenine, Tunisie"
-            bullets={[
+            ],
+            tags: ["Flutter", "Spring Boot", "MongoDB", "JWT"],
+          },
+          {
+            side: "right",
+            title: "Projet de Fin d’étude – Plateforme E-commerce",
+            org: "SOTUDEV",
+            date: "Février 2022 – Mai 2022",
+            place: "Medenine, Tunisie",
+            bullets: [
               "Plateforme e-commerce pour restaurants",
               "Géolocalisation, menus, panier, commande, paiement, livraison",
               "Architecture full-stack complète",
-            ]}
-            tags={["Angular", "Spring Boot", "MySQL"]}
-          />
-          {/* ajoute d'autres ExpCard ici */}
+            ],
+            tags: ["Angular", "Spring Boot", "MySQL"],
+          },
+          {
+            side: "left",
+            title: "Stage – Développement Site Vitrine",
+            org: "Société Sghaier",
+            date: "Septembre 2021 – Octobre 2021",
+            place: "Ksour Essef, Mahdia",
+            bullets: [
+              "Création d'un site vitrine pour pièces détachées automobiles",
+              "Catalogue, moteur de recherche, formulaire de contact",
+              "Développement front-end et back-end",
+            ],
+            tags: ["HTML", "CSS", "JavaScript", "PHP", "MySQL"],
+          },
+        ]
+      : [
+          {
+            side: "left",
+            title: "Internship – Mobile Application Development",
+            org: "ESPRIM",
+            date: "July 2025 – August 2025",
+            place: "Al Munastir, Tunisia",
+            bullets: [
+              "Developed a mobile application using Flutter",
+              "Backend with Spring Boot & MongoDB",
+              "Secure authentication with JWT",
+              "Modules: announcements, timetables, student portal",
+            ],
+            tags: ["Flutter", "Spring Boot", "MongoDB", "JWT"],
+          },
+          {
+            side: "right",
+            title: "Final-Year Project – E-commerce Platform",
+            org: "SOTUDEV",
+            date: "February 2022 – May 2022",
+            place: "Medenine, Tunisia",
+            bullets: [
+              "E-commerce platform for restaurants",
+              "Geolocation, menus, cart, orders, payment, delivery",
+              "Full-stack architecture",
+            ],
+            tags: ["Angular", "Spring Boot", "MySQL"],
+          },
+          {
+            side: "left",
+            title: "Internship – Showcase Website",
+            org: "Sghaier Company",
+            date: "September 2021 – October 2021",
+            place: "Ksour Essef, Mahdia",
+            bullets: [
+              "Created a showcase website for auto parts",
+              "Catalog, search engine, contact form",
+              "Front-end and back-end development",
+            ],
+            tags: ["HTML", "CSS", "JavaScript", "PHP", "MySQL"],
+          },
+        ];
+
+  return (
+    <section id="exp" className="py-5">
+      <div className="container">
+        <h2 className="section-title text-center">{title}</h2>
+
+        <div className="timeline mt-4">
+          {cards.map((c, i) => (
+            <ExpCard key={i} {...c} />
+          ))}
         </div>
       </div>
     </section>

@@ -1,11 +1,24 @@
+// src/components/Certifications.tsx
+import React from "react";
+import type { Lang } from "../lang";
 import SectionTitle from "./SectionTitle";
 import { certifications } from "../data/certifications";
 
-export default function Certifications() {
+type CertificationsProps = {
+  lang: Lang;
+};
+
+const Certifications: React.FC<CertificationsProps> = ({ lang }) => {
+  const title = lang === "fr" ? "Certifications" : "Certifications";
+  const subtitle =
+    lang === "fr"
+      ? "Quelques formations et certifications que j’ai obtenues."
+      : "Some of the trainings and certifications I completed.";
+
   return (
     <section id="certifications" className="section">
       <div className="container">
-        <SectionTitle title="Certifications" />
+        <SectionTitle title={title} subtitle={subtitle} />
 
         <div className="row g-3">
           {certifications.map((cert, i) => (
@@ -29,4 +42,6 @@ export default function Certifications() {
       </div>
     </section>
   );
-}
+};
+
+export default Certifications;

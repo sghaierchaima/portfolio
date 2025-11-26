@@ -1,18 +1,36 @@
+// src/components/Footer.tsx
 import React from "react";
+import type { Lang } from "../lang";
 
-const Footer: React.FC = () => {
+type FooterProps = {
+  lang: Lang;
+};
+
+const Footer: React.FC<FooterProps> = ({ lang }) => {
   const year = new Date().getFullYear();
+
+  const text =
+    lang === "fr"
+      ? {
+          built: "Développé par",
+          rights: "Tous droits réservés",
+        }
+      : {
+          built: "Built by",
+          rights: "All rights reserved",
+        };
 
   return (
     <footer className="footer-wrap">
       <div className="container text-center py-4 py-md-5">
         <div className="footer-sep mx-auto" />
         <p className="mb-1 text-white-50">
-          Développé avec <span className="text-white">React</span> et{" "}
-          <span className="text-white">Tailwind CSS</span> par{" "}
+          {text.built}{" "}
           <span className="text-white">Chaima Sghaier</span>
         </p>
-        <small className="text-white-50">{year} — Tous droits réservés</small>
+        <small className="text-white-50">
+          {year} — {text.rights}
+        </small>
       </div>
     </footer>
   );
